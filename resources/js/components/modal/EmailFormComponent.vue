@@ -85,17 +85,16 @@
                     .post(`api/order/${this.id}`,{place_id: this.id, email: this.email})
                     .then(response=>{
                         if(response.data.success){
-                            var place = document.getElementById(this.id);
-                            place.classList.remove('free');
-                            place.classList.add('busy');
                             this.setMessage(true,response.data.message, false, 'alert-success');
                          }
+                        this.setBusyPlace();
                         this.showOrderButton = false;
                         loader.hide();
                     }).catch(error=>{
                         if(error.response.data.errors.email){
                             this.setMessage(true, error.response.data.errors.email[0], false, 'alert-danger') ;
                         }else if(error.response.data.errors.place_id){
+                            this.setBusyPlace();
                             this.setMessage(true, error.response.data.errors.place_id[0], true, 'alert-danger') ;
                             this.showOrderButton = false;
                         }else{
@@ -105,6 +104,11 @@
                 });
 
             },
+            setBusyPlace(){
+                var place = document.getElementById(this.id);
+                place.classList.remove('free');
+                place.classList.add('busy');
+            }
         }
     }
 </script>
