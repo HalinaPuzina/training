@@ -1,10 +1,10 @@
 <template>
-    <div class="message" v-if="show">
-            <div  :class="['message-alert', type]">
+    <div class="message" v-if="isShow">
+            <div  :class="['message-alert', className]">
                 <p>{{text}}</p>
             </div>
         <div class="image">
-            <img v-if="image" src="/img/wasted.png">
+            <img v-if="isShowImage" src="/img/wasted.png">
         </div>
     </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
     export default {
         name: "MessageComponent",
-        props: ['show','text','type','image']
+        props: ['isShow','text','className','isShowImage']
     }
 </script>
 

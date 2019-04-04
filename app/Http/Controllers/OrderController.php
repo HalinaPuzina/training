@@ -10,12 +10,10 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-
-
-    /**
+     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\OrderRequest  $request
+     * @param  OrderRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(OrderRequest $request)

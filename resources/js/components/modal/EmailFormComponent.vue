@@ -33,7 +33,6 @@
 
 <script>
     import axios from 'axios';
-    const MODAL_WIDTH = 656;
     import MessageComponent from './MessageComponent';
     export default {
         name: "EmailFormComponent",
@@ -46,10 +45,10 @@
                 email: null,
                 showOrderButton: false,
                 message: {
-                    show: false,
+                    isShow: false,
                     text: null,
-                    image: false,
-                    type: null
+                    isShowImage: false,
+                    className: null
                 }
             }
         },
@@ -59,17 +58,17 @@
             }
         },
         methods: {
-            setMessage(show,text,image,type){
-                this. message.show = show || false;
+            setMessageParams(isShow,text,isShowImage,className){
+                this.message.isShow = isShow || false;
                 this.message.text = text || null;
-                this.message.image = image || false;
-                this.message.type = type || null;
+                this.message.isShowImage = isShowImage || false;
+                this.message.className = className || null;
             },
             close() {
                 this.$modal.hide('email-form');
             },
             beforeOpen(event){
-                this.setMessage();
+                this.setMessageParams();
                 this.email =  null;
                 this.id = event.params.id;
             },
@@ -80,25 +79,25 @@
                     canCancel: true,
                     onCancel: this.onCancel,
                 });
-                this.setMessage();
+                this.setMessageParams();
                 axios
                     .post(`api/order/${this.id}`,{place_id: this.id, email: this.email})
                     .then(response=>{
                         if(response.data.success){
-                            this.setMessage(true,response.data.message, false, 'alert-success');
+                            this.setMessageParams(true,response.data.message, false, 'alert-success');
                          }
                         this.setBusyPlace();
                         this.showOrderButton = false;
                         loader.hide();
                     }).catch(error=>{
                         if(error.response.data.errors.email){
-                            this.setMessage(true, error.response.data.errors.email[0], false, 'alert-danger') ;
+                            this.setMessageParams(true, error.response.data.errors.email[0], false, 'alert-danger') ;
                         }else if(error.response.data.errors.place_id){
                             this.setBusyPlace();
-                            this.setMessage(true, error.response.data.errors.place_id[0], true, 'alert-danger') ;
+                            this.setMessageParams(true, error.response.data.errors.place_id[0], true, 'alert-danger') ;
                             this.showOrderButton = false;
                         }else{
-                            this.setMessage(true, error.message, false, 'alert-danger') ;
+                            this.setMessageParams(true, error.message, false, 'alert-danger') ;
                         }
                         loader.hide();
                 });

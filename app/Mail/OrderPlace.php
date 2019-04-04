@@ -16,7 +16,7 @@ class OrderPlace extends Mailable
 
     /**
      * Create a new message instance.
-     * @var $order  Order
+     * @param  $order  Order
      *
      * @return void
      */

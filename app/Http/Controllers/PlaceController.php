@@ -15,6 +15,7 @@ class PlaceController extends Controller
     public function index()
     {
         return PlaceResource::collection(Place::all());
+
     }
 
 }

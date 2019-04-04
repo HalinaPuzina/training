@@ -22,7 +22,7 @@ class Order extends Model
         $order = Order::where('code',$code)->first();
 
          if($order){
-             $this->randomizeCode($placeId);
+            $code = $this->randomCode($placeId);
          }
          return $code;
     }

@@ -1,7 +1,12 @@
 <template>
-    <div  class="map"  v-on:click="doOrder">
+    <div v-if="places" class="map"  v-on:click="doOrder">
         <email-form-component/>
         <div v-for="place in places" :key="place.id" :class="[placeClass, localeClass ? place.class : '']" :title="place.name"><div :id="place.id" :class="[place.is_free ? 'free' : 'busy']"></div></div>
+    </div>
+    <div v-else>
+        <div v-show="dataErrors" class="alert alert-danger">
+            {{dataErrors}}
+        </div>
     </div>
 </template>
 
@@ -17,7 +22,8 @@
             return {
                 places: null,
                 placeClass: 'place',
-                localeClass: true
+                localeClass: true,
+                dataErrors: null
             }
         },
         created() {
@@ -35,6 +41,9 @@
                   .get('api/places').then(response => {
                       this.places = response.data.data;
                       loader.hide();
+              }).catch(error=>{
+                  this.dataErrors =  error.message;
+                  loader.hide();
               });
             },
             doOrder(event){
@@ -58,6 +67,3 @@
     }
 </script>
 
-<style scoped>
-
-</style>
