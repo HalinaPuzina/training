@@ -42,7 +42,6 @@
         },
         data () {
             return {
-                modalWidth: MODAL_WIDTH,
                 id: null,
                 email: null,
                 showOrderButton: false,
@@ -53,11 +52,6 @@
                     type: null
                 }
             }
-        },
-        created () {
-            this.modalWidth = window.innerWidth < MODAL_WIDTH
-                ? MODAL_WIDTH / 2
-                : MODAL_WIDTH
         },
         watch: {
             email: function (){

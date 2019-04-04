@@ -4,7 +4,7 @@
                 <p>{{text}}</p>
             </div>
         <div class="image">
-            <img v-show="image" src="/img/wasted.png">
+            <img v-if="image" src="/img/wasted.png">
         </div>
     </div>
 </template>
